@@ -29,6 +29,8 @@ ARG TARGETOS
 ARG TARGETARCH
 
 WORKDIR /src/backend
+ENV GOPROXY=https://goproxy.cn,direct
+
 RUN apk add --no-cache ca-certificates git
 
 COPY backend/go.mod backend/go.sum ./
@@ -54,9 +56,9 @@ RUN apk add --no-cache ca-certificates su-exec tzdata && \
     adduser -S -D -H -u 10001 -G grok2api grok2api && \
     mkdir -p /app/data /run/grok2api /var/lib/grok2api-quality-guard && \
     chown -R grok2api:grok2api \
-      /app/data \
-      /run/grok2api \
-      /var/lib/grok2api-quality-guard && \
+    /app/data \
+    /run/grok2api \
+    /var/lib/grok2api-quality-guard && \
     chmod 0700 /var/lib/grok2api-quality-guard
 
 WORKDIR /app
